@@ -1,56 +1,42 @@
 plugins {
+    id 'org.springframework.boot' version '2.6.13'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
     id 'java'
-    id 'org.springframework.boot' version '3.2.3'
-    id 'io.spring.dependency-management' version '1.1.4'
-    id 'com.netflix.dgs.codegen' version '6.0.3'
-    id 'org.graalvm.buildtools.native' version '0.9.28'
 }
 
-group = 'org.example'
-version = '0.0.1-SNAPSHOT'
-
-java {
-    sourceCompatibility = '17'
-}
-
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
+group 'org.example'
+version '0.1-SNAPSHOT'
 
 repositories {
     mavenCentral()
 }
 
-ext {
-    set('springModulithVersion', "1.1.2")
-}
-
 dependencies {
-    implementation 'org.springframework.modulith:spring-modulith-starter-core'
-    compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.modulith:spring-modulith-starter-test'
-}
 
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.modulith:spring-modulith-bom:${springModulithVersion}"
+
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.14'
+
+    implementation 'mysql:mysql-connector-java:8.0.28'
+    implementation 'com.auth0:java-jwt:4.2.2'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter'
+
+
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'junit', module: 'junit'
     }
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }
 
-tasks.named('test') {
+test {
     useJUnitPlatform()
 }
-
-generateJava {
-    schemaPaths = ["${projectDir}/src/main/resources/graphql-client"]
-    packageName = 'org.example.fortnite.codegen'
-    generateClient = true
-}
-
