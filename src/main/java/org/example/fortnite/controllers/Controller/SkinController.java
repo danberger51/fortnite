@@ -69,7 +69,7 @@ public class SkinController {
         }
     }
 
-    @PostMapping(consumes = "application/json")
+    @PostMapping(path = "/insert",consumes = "application/json")
     @Operation(summary = "Insert a Skin")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Created",
@@ -99,7 +99,7 @@ public class SkinController {
             @ApiResponse(responseCode = "400", description = "Bad Request",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = User.class))})})
-    public void updateMovie(@Valid @RequestBody Skin skin) {
+    public void updateSkin(@Valid @RequestBody Skin skin) {
         try {
             skinService.updateSkin(skin);
         } catch (RuntimeException e) {

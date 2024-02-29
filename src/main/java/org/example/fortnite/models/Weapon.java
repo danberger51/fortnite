@@ -1,16 +1,16 @@
 package org.example.fortnite.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+
 
 @Entity
+@Table(name = "weapon")
 public class Weapon {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_waffen")
     private Integer id;
 
     private String name;

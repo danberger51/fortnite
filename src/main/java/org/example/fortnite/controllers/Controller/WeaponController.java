@@ -20,13 +20,13 @@ import javax.validation.Valid;
 
 @Validated
 @RestController
-@RequestMapping("/skins")
+@RequestMapping("/weapons")
 public class WeaponController {
 
     @Autowired
     private final WeaponService weaponService;
 
-    @GetMapping("{id}")
+    @GetMapping(path = "/{id}")
     @Operation(summary = "find a weapon by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Weapon was found",
@@ -69,7 +69,7 @@ public class WeaponController {
         }
     }
 
-    @PostMapping(consumes = "application/json")
+    @PostMapping(path = "/insert",consumes = "application/json")
     @Operation(summary = "Insert a Weapon")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Created",
@@ -99,7 +99,7 @@ public class WeaponController {
             @ApiResponse(responseCode = "400", description = "Bad Request",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = User.class))})})
-    public void updateMovie(@Valid @RequestBody Weapon weapon) {
+    public void updateWeapon(@Valid @RequestBody Weapon weapon) {
         try {
             weaponService.updateWeapon(weapon);
         } catch (RuntimeException e) {
