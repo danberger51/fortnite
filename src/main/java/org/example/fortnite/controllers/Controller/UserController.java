@@ -67,11 +67,6 @@ public class UserController {
         }
     }
 
-
-
-
-
-
     @GetMapping
     @Operation(summary = "get all Users")
     @ApiResponses(value = {
@@ -91,12 +86,6 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Users not found");
         }
     }
-
-
-
-
-
-
 
     @PostMapping(path = "/sign-up", consumes = "application/json")
     @Operation(summary = "Sign-up a user")
