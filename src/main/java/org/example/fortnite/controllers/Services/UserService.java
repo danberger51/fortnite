@@ -34,12 +34,11 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public void signUp(User user) {
+    public Void signUp(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+        return null;
     }
-
-
 
 
     public void updateUser(User user) {
