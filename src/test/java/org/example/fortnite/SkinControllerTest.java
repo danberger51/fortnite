@@ -5,6 +5,7 @@ import org.example.fortnite.controllers.Services.SkinService;
 import org.example.fortnite.controllers.Services.UserDetailsServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -15,9 +16,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.TimeZone;
 
 import static org.example.fortnite.TestDataUtil.getTestSkins;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -63,8 +64,18 @@ public class SkinControllerTest {
                         // der Inhalt in unserem Body entspricht einem JSON
                         .contentType("application/json")
                         // ein neues skin-Objekt wird als JSON in den Body gegeben und mitgeschickt
-                        .content("{\"name\": \"Skin99\", \"seltenheit\": \"Episch\"}"))
+                        .content("{\"name\": \"Skin99\", \"rarity\": \"Episch\"}"))
                 // wir erwarten den Status 201
                 .andExpect(status().isOk());
     }
+
+    @Test
+    public void checkDelete() throws Exception {
+        mockMvc.perform(delete("/skins/1"))
+                .andExpect(status().isOk());
+
+        Mockito.verify(skinService).deleteById(eq(1));
+    }
+
+
 }
