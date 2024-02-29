@@ -27,7 +27,7 @@ public class UserController {
     private final UserService userService;
 
 
-    @GetMapping(path = "{id}")
+    @GetMapping(path = "/byId/{id}")
     @Operation(summary = "find a user by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User was found",
@@ -47,7 +47,7 @@ public class UserController {
         }
     }
 
-    @GetMapping(path = "{username}")
+    @GetMapping(path = "/byUsername/{username}")
     @Operation(summary = "find a user by username")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User was found",

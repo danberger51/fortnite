@@ -17,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Validated
 @RestController
@@ -26,7 +27,7 @@ public class WeaponController {
     @Autowired
     private final WeaponService weaponService;
 
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = "/byId/{id}")
     @Operation(summary = "find a weapon by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Weapon was found",
@@ -45,6 +46,47 @@ public class WeaponController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Weapon not Found");
         }
     }
+
+    @GetMapping(path = "/byName/{name}")
+    @Operation(summary = "find a weapon by name")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Weapon was found",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = User.class))}),
+            @ApiResponse(responseCode = "404", description = "Weapom was not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "400", description = "Bad-Request",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = User.class))})})
+    public Weapon getWeaponByName(@Valid @PathVariable String name) {
+        try {
+            return weaponService.findWeaponByName(name);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Weapon not Found");
+        }
+    }
+
+    @GetMapping(path = "/byTyp/{typ}")
+    @Operation(summary = "find a weapon by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Weapon was found",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = User.class))}),
+            @ApiResponse(responseCode = "404", description = "Weapom was not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "400", description = "Bad-Request",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = User.class))})})
+    public List<Weapon> getWeaponByTyp(@Valid @PathVariable String typ) {
+        try {
+            return weaponService.findWeaponByTyp(typ);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Weapon not Found");
+        }
+    }
+
 
 
 

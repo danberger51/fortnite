@@ -14,6 +14,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+
+
 import static org.example.fortnite.controllers.Configurations.SecurityConstants.SIGN_UP_URL;
 import static org.example.fortnite.controllers.Configurations.SecurityConstants.API_DOCUMENTATION_URLS;
 @Configuration
