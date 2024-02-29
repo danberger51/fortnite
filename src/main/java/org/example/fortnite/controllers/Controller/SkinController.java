@@ -10,6 +10,7 @@ import org.example.fortnite.controllers.Services.SkinService;
 import org.example.fortnite.models.Skin;
 import org.example.fortnite.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Validated
 @RestController
@@ -45,6 +47,47 @@ public class SkinController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Skin not Found");
         }
     }
+    @GetMapping("/byRarity/{rarity}")
+    @Operation(summary = "find a skin by rarity")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Skin was found",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = User.class))}),
+            @ApiResponse(responseCode = "404", description = "Skin was not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "400", description = "Bad-Request",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = User.class))})})
+    public List<Skin> getSkinByRarity(@Valid @PathVariable String rarity){
+        try {
+            return skinService.findSkinByRarity(rarity);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Rarity not found");
+        }
+    }
+
+    @GetMapping("/byName/{name}")
+    @Operation(summary = "find a skin by name")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Skin was found",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = User.class))}),
+            @ApiResponse(responseCode = "404", description = "Skin was not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "400", description = "Bad-Request",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = User.class))})})
+    public Skin getSkinByName(@Valid @PathVariable String name){
+        try {
+            return skinService.findSkinByName(name);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Rarity not found");
+        }
+    }
+
+
 
     @GetMapping
     @Operation(summary = "find all Skins")

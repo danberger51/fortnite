@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class SkinService {
@@ -20,6 +20,14 @@ public class SkinService {
     public Skin findSkinById(Integer id) {
         return skinRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Skin id was not found"));
+    }
+
+    public List<Skin> findSkinByRarity(String rarity) {
+        return skinRepository.findByRarity(rarity);
+    }
+
+    public Skin findSkinByName(String name) {
+        return skinRepository.findByName(name);
     }
 
     public Iterable<Skin> findAllSkins() {

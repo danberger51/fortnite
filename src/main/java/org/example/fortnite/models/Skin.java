@@ -20,10 +20,12 @@ public class Skin {
 
     @NotBlank(message = "Die Seltenheit von dem Skin darf nicht Leer sein.")
     @NotNull(message = "Die Seltenheit von dem Skin muss ausgefühlt sein")
-    private String seltenheit;
+    @Column(name = "seltenheit")
+    private String rarity;
 
     @NotBlank(message = "Der Name von dem Skin darf nicht Leer sein.")
     @NotNull(message = "Der Name von dem Skin muss ausgefühlt sein")
+    @Column(name = "name")
     private String name;
 
 
@@ -35,12 +37,12 @@ public class Skin {
         this.id = id;
     }
 
-    public String getSeltenheit() {
-        return seltenheit;
+    public String getRarity() {
+        return rarity;
     }
 
-    public void setSeltenheit(String seltenheit) {
-        this.seltenheit = seltenheit;
+    public void setRarity(String rarity) {
+        this.rarity = rarity;
     }
 
     public String getName() {

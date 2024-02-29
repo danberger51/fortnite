@@ -15,13 +15,16 @@ public class Weapon {
     @Column(name = "id_waffen")
     private Integer id;
 
-    @NotBlank(message = "Der Name von der Waffe darf nicht Leer sein.")
-    @NotNull(message = "Der Name von der Waffe muss ausgefühlt sein")
-    private String name;
-
     @NotBlank(message = "Der Typ von der Waffe darf nicht Leer sein.")
     @NotNull(message = "Der Typ von der Waffe muss ausgefühlt sein")
+    @Column(name = "typ")
     private String typ;
+
+    @NotBlank(message = "Der Name von der Waffe darf nicht Leer sein.")
+    @NotNull(message = "Der Name von der Waffe muss ausgefühlt sein")
+    @Column(name = "name")
+    private String name;
+
 
 
     public Integer getId() {

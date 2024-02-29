@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
 @Service
 public class WeaponService {
@@ -19,6 +20,14 @@ public class WeaponService {
     public Weapon findWeaponById(Integer id) {
         return weaponRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with ID"));
+    }
+
+    public Weapon findWeaponByName(String name) {
+        return weaponRepository.findByName(name);
+    }
+
+    public List<Weapon> findWeaponByTyp(String typ) {
+        return weaponRepository.findByTyp(typ);
     }
 
     public Iterable<Weapon> findAllWeapons() {

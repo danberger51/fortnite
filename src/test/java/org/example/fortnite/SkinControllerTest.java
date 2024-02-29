@@ -1,6 +1,5 @@
 package org.example.fortnite;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.example.fortnite.controllers.Controller.SkinController;
 import org.example.fortnite.controllers.Services.SkinService;
 import org.example.fortnite.controllers.Services.UserDetailsServiceImpl;
@@ -12,16 +11,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.HashMap;
 import java.util.TimeZone;
 
 import static org.example.fortnite.TestDataUtil.getTestSkins;
 import static org.mockito.Mockito.doReturn;
-import static org.springframework.test.util.AssertionErrors.assertEquals;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;

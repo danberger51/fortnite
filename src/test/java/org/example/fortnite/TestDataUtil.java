@@ -13,7 +13,7 @@ public class TestDataUtil {
             Skin skin = new Skin();
             skin.setId(i);
             skin.setName("Skin"+i);
-            skin.setSeltenheit("Episch");
+            skin.setRarity("Episch");
             skins.add(skin);
         }
 
