@@ -28,7 +28,7 @@ public class SkinController {
     @Autowired
     private final SkinService skinService;
 
-    @GetMapping("/byId/{id}")
+    @GetMapping("{id}")
     @Operation(summary = "find a skin by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Skin was found",
