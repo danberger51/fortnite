@@ -4,8 +4,6 @@ package org.example.fortnite.controllers.Controller;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import io.jsonwebtoken.*;
-import io.jsonwebtoken.security.Keys;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -22,43 +20,29 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
-
-
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.security.SecureRandom;
-import java.util.Base64;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
-
 import static org.example.fortnite.controllers.Configurations.SecurityConstants.EXPIRATION_TIME;
 import static org.example.fortnite.controllers.Configurations.SecurityConstants.SECRET;
-import static org.example.fortnite.controllers.Configurations.JWTAuthenticationFilter.*;
+
 
 
 @Validated
 @RestController
 @RequestMapping("/")
 public class UserController {
-
     @Autowired
     private final UserService userService;
-
     @Autowired
     private AuthenticationManager authenticationManager;
-
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
 
     @GetMapping(path = "users/byId/{id}")
     @Operation(summary = "find a user by id")
@@ -130,18 +114,9 @@ public class UserController {
             @ApiResponse(responseCode = "400", description = "Validation failed",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = User.class))})})
-    public ResponseEntity<Map<String, String>> signUpUser(@Valid @RequestBody User user) {
+    public Void signUpUser(@Valid @RequestBody User user) {
         try {
-            userService.signUp(user);
-
-            // Generate JWT token after successful signup
-            String token = JWT.create()
-                    .withSubject(user.getUsername())
-                    .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                    .sign(Algorithm.HMAC512(SECRET.getBytes()));
-
-            Map<String, String> response = Collections.singletonMap("token", token);
-            return ResponseEntity.ok(response);
+            return userService.signUp(user);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.CONFLICT, "user did already sign-up");
@@ -160,25 +135,19 @@ public class UserController {
                         loginRequest.getPassword()
                 )
         );
-
         // Setzen Sie die Authentifizierungsinformationen im Sicherheitskontext
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
         // Hier wird ein JWT-Token erstellt, das den Benutzernamen als Subjekt enthält
         // und eine Ablaufzeit hat
         String token = JWT.create()
                 .withSubject(((UserDetails) authentication.getPrincipal()).getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .sign(Algorithm.HMAC512(SECRET.getBytes()));
-
         // Die Antwort enthält das JWT-Token im Body
         Map<String, String> response = Collections.singletonMap("token", token);
         // Die Antwort wird mit dem HTTP-Status "OK" zurückgegeben
         return ResponseEntity.ok(response);
     }
-
-
-
 
     @PutMapping(path = "users/update", consumes = "application/json")
     @Operation(summary = "Update a user")
