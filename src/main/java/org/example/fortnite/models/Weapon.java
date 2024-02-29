@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name = "weapon")
+@Table(name = "waffen")
 public class Weapon {
 
     @Id
