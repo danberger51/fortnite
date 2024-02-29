@@ -10,6 +10,7 @@ import java.util.Set;
 @Entity
 @Table(name = "skin")
 public class Skin {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_skin")
