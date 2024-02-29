@@ -14,8 +14,8 @@ import org.springframework.data.annotation.ReadOnlyProperty;
 
 @SpringBootApplication
 @EntityScan("org.example.fortnite.models")
+@Table(name = "user")
 @Entity
-@Table(name="user")
 public class User {
 
     @Id
