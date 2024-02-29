@@ -1,16 +1,14 @@
 package org.example.fortnite.models;
-import javax.persistence.Entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.data.annotation.ReadOnlyProperty;
+import javax.validation.constraints.Size;
 
 @SpringBootApplication
 @EntityScan("org.example.fortnite.models")
@@ -30,6 +28,7 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotBlank(message = "Passwort darf nicht Leer sein!")
     @NotNull(message = "Passwort muss ausgefühlt sein")
+    @Length(min = 8, max = 255)
     private String password;
 
     public Integer getId() {
