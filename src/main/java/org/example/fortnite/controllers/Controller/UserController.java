@@ -9,13 +9,17 @@ import org.example.fortnite.controllers.Services.UserService;
 import org.example.fortnite.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 
 import javax.validation.Valid;
-
+import java.security.SecureRandom;
+import java.util.Base64;
+import java.util.Collections;
+import java.util.Map;
 
 
 @Validated
@@ -98,9 +102,12 @@ public class UserController {
             @ApiResponse(responseCode = "400", description = "Validation failed",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = User.class))})})
-    public void signUpUser(@Valid @RequestBody User user) {
+    public ResponseEntity<Map<String, String>> signUpUser(@Valid @RequestBody User user) {
         try {
             userService.signUp(user);
+            String authToken = generateAuthToken();
+            Map<String, String> response = Collections.singletonMap("token", authToken);
+            return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.CONFLICT, "user did already sign-up");
@@ -156,5 +163,11 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+    private String generateAuthToken() {
+        byte[] randomBytes = new byte[32];
+        new SecureRandom().nextBytes(randomBytes);
+        return Base64.getEncoder().encodeToString(randomBytes);
+    }
+
 }
 
