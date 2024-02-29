@@ -65,12 +65,12 @@ public class SkinControllerTest {
 
     @Test
     public void checkNewSkin() throws Exception {
-        mockMvc.perform(post("/skins")
+        mockMvc.perform(post("/skins/insert")
                         // der Inhalt in unserem Body entspricht einem JSON
                         .contentType("application/json")
                         // ein neues skin-Objekt wird als JSON in den Body gegeben und mitgeschickt
                         .content("{\"name\": \"Skin99\", \"seltenheit\": \"Episch\"}"))
                 // wir erwarten den Status 201
-                .andExpect(status().isCreated());
+                .andExpect(status().isOk());
     }
 }

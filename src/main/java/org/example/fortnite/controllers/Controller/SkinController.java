@@ -46,9 +46,6 @@ public class SkinController {
         }
     }
 
-
-
-
     @GetMapping
     @Operation(summary = "find all Skins")
     @ApiResponses(value = {
