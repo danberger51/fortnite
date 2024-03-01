@@ -123,8 +123,7 @@ public class UserController {
         }
     }
 
-    // Hier wird ein POST-Endpunkt für die Authentifizierung (Login) erstellt
-// Der Endpunkt-Pfad lautet "/login"
+
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequest loginRequest) {
         // Benutzer authentifizieren und ein JWT-Token generieren
