@@ -20,9 +20,14 @@ import static org.example.fortnite.controllers.Configurations.SecurityConstants.
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+    // UserDetailsServiceImpl ist eine Implementierung des UserDetailsService-Interfaces von Spring Security.
+    // Es wird verwendet, um Benutzerinformationen zu laden.
     private final UserDetailsServiceImpl userDetailsService;
+
+    // bCryptPasswordEncoder wird verwendet, um Passwörter zu hashen und zu überprüfen.
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    // Konstruktor, der die erforderlichen Abhängigkeiten injiziert.
     public SecurityConfiguration(UserDetailsServiceImpl userDetailsService,
                                  BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userDetailsService = userDetailsService;
@@ -31,24 +36,27 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
-                .antMatchers(HttpMethod.GET, API_DOCUMENTATION_URLS).permitAll()
-                .anyRequest().authenticated()
+        // Konfiguration der HTTP-Sicherheitseinstellungen.
+        http.cors().and().csrf().disable() // CORS und CSRF-Schutz deaktivieren.
+                .authorizeRequests()
+                .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll() // Erlaube POST-Anfragen auf SIGN_UP_URL ohne Authentifizierung.
+                .antMatchers(HttpMethod.GET, API_DOCUMENTATION_URLS).permitAll() // Erlaube GET-Anfragen auf API_DOCUMENTATION_URLS ohne Authentifizierung.
+                .anyRequest().authenticated() // Alle anderen Anfragen erfordern Authentifizierung.
                 .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-                .addFilter(new JWTAuthorizationFilter(authenticationManager()))
-                // this disables session creation on Spring Security
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .addFilter(new JWTAuthenticationFilter(authenticationManager())) // Füge benutzerdefinierten Filter für die Authentifizierung hinzu.
+                .addFilter(new JWTAuthorizationFilter(authenticationManager())) // Füge benutzerdefinierten Filter für die Autorisierung hinzu.
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // Deaktiviere Sitzungserstellung (RESTful-Anwendung).
     }
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        // Konfiguration des AuthenticationManagerBuilders.
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
+        // Bean für die Konfiguration von CORS (Cross-Origin Resource Sharing).
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
         return source;
@@ -56,6 +64,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
+        // Bean für den AuthenticationManager.
         return super.authenticationManagerBean();
     }
 }
