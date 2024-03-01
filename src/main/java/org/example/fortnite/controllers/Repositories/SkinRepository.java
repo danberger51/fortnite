@@ -11,5 +11,6 @@ import java.util.List;
 @Repository
 public interface SkinRepository extends CrudRepository<Skin, Integer> {
     List<Skin> findByRarity(@Param("rarity") String rarity);
+
     Skin findByName(@Param("name") String name);
 }

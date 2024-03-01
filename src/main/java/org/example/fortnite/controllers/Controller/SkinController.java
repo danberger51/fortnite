@@ -47,6 +47,7 @@ public class SkinController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Skin not Found");
         }
     }
+
     @GetMapping("/byRarity/{rarity}")
     @Operation(summary = "find a skin by rarity")
     @ApiResponses(value = {
@@ -54,6 +55,8 @@ public class SkinController {
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = User.class))}),
             @ApiResponse(responseCode = "404", description = "Skin was not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "403", description = "You don't have the rights to do that.",
                     content = @Content),
             @ApiResponse(responseCode = "400", description = "Bad-Request",
                     content = {@Content(mediaType = "application/json",
@@ -74,6 +77,8 @@ public class SkinController {
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = User.class))}),
             @ApiResponse(responseCode = "404", description = "Skin was not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "403", description = "You don't have the rights to do that.",
                     content = @Content),
             @ApiResponse(responseCode = "400", description = "Bad-Request",
                     content = {@Content(mediaType = "application/json",
@@ -97,6 +102,8 @@ public class SkinController {
                             schema = @Schema(implementation = User.class))}),
             @ApiResponse(responseCode = "404", description = "Skins were not found",
                     content = @Content),
+            @ApiResponse(responseCode = "403", description = "You don't have the rights to do that.",
+                    content = @Content),
             @ApiResponse(responseCode = "400", description = "Bad-Request",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = User.class))})})
@@ -117,6 +124,8 @@ public class SkinController {
                             schema = @Schema(implementation = User.class))}),
             @ApiResponse(responseCode = "409", description = "Insert failed",
                     content = @Content),
+            @ApiResponse(responseCode = "403", description = "You don't have the rights to do that.",
+                    content = @Content),
             @ApiResponse(responseCode = "400", description = "Validation failed",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = User.class))})})
@@ -135,6 +144,8 @@ public class SkinController {
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = User.class))}),
             @ApiResponse(responseCode = "404", description = "Skin not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "403", description = "You don't have the rights to do that.",
                     content = @Content),
             @ApiResponse(responseCode = "400", description = "Bad Request",
                     content = {@Content(mediaType = "application/json",
@@ -155,6 +166,8 @@ public class SkinController {
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = User.class))}),
             @ApiResponse(responseCode = "404", description = "Skin was not Found",
+                    content = @Content),
+            @ApiResponse(responseCode = "403", description = "You don't have the rights to do that.",
                     content = @Content),
             @ApiResponse(responseCode = "400", description = "Bad-Request",
                     content = {@Content(mediaType = "application/json",
