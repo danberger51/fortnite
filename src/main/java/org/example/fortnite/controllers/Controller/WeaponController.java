@@ -23,10 +23,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/weapons")
 public class WeaponController {
-
     @Autowired
     private final WeaponService weaponService;
-
     @GetMapping(path = "/byId/{id}")
     @Operation(summary = "find a weapon by id")
     @ApiResponses(value = {
@@ -48,7 +46,6 @@ public class WeaponController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Weapon not Found");
         }
     }
-
     @GetMapping(path = "/byName/{name}")
     @Operation(summary = "find a weapon by name")
     @ApiResponses(value = {
@@ -70,14 +67,13 @@ public class WeaponController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Weapon not Found");
         }
     }
-
     @GetMapping(path = "/byTyp/{typ}")
-    @Operation(summary = "find a weapon by id")
+    @Operation(summary = "find a weapon by Type")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Weapon was found",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = User.class))}),
-            @ApiResponse(responseCode = "404", description = "Weapom was not found",
+            @ApiResponse(responseCode = "404", description = "Weapon was not found",
                     content = @Content),
             @ApiResponse(responseCode = "403", description = "You don't have the rights to do that.",
                     content = @Content),
@@ -92,11 +88,6 @@ public class WeaponController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Weapon not Found");
         }
     }
-
-
-
-
-
     @GetMapping
     @Operation(summary = "find all Weapons")
     @ApiResponses(value = {
@@ -118,7 +109,6 @@ public class WeaponController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Weapons not Found");
         }
     }
-
     @PostMapping(path = "/insert",consumes = "application/json")
     @Operation(summary = "Insert a Weapon")
     @ApiResponses(value = {
@@ -161,7 +151,6 @@ public class WeaponController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Weapon not Found");
         }
     }
-
     @DeleteMapping(path = "{id}")
     @Operation(summary = "Delete a weapon by id")
     @ApiResponses(value = {
@@ -183,9 +172,6 @@ public class WeaponController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Weapon not Found");
         }
     }
-
-
-
     public WeaponController(WeaponService weaponService) {
         this.weaponService = weaponService;
     }

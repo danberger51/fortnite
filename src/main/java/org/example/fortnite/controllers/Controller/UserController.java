@@ -43,7 +43,6 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
     @GetMapping(path = "users/byId/{id}")
     @Operation(summary = "find a user by id")
     @ApiResponses(value = {
@@ -65,7 +64,6 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "User not Found");
         }
     }
-
     @GetMapping(path = "users/byUsername/{username}")
     @Operation(summary = "find a user by username")
     @ApiResponses(value = {
@@ -87,7 +85,6 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "User not Found");
         }
     }
-
     @GetMapping(path = "users")
     @Operation(summary = "get all Users")
     @ApiResponses(value = {
@@ -109,7 +106,6 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Users not found");
         }
     }
-
     @PostMapping(path = "users/sign-up", consumes = "application/json")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User was Sign-up successfully",
@@ -130,8 +126,6 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "user did already sign-up");
         }
     }
-
-
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequest loginRequest) {
         // Benutzer authentifizieren und ein JWT-Token generieren
@@ -155,7 +149,6 @@ public class UserController {
         // Die Antwort wird mit dem HTTP-Status "OK" zurückgegeben
         return ResponseEntity.ok(response);
     }
-
     @PutMapping(path = "users/update", consumes = "application/json")
     @Operation(summary = "Update a user")
     @ApiResponses(value = {
@@ -177,7 +170,6 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already in use");
         }
     }
-
     @DeleteMapping("users/{id}")
     @Operation(summary = "Delete a user")
     @ApiResponses(value = {

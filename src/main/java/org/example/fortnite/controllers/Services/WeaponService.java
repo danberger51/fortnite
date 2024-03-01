@@ -11,37 +11,29 @@ import java.util.List;
 @Service
 public class WeaponService {
     private final WeaponRepository weaponRepository;
-
     @Autowired
     public WeaponService(WeaponRepository weaponRepository) {
         this.weaponRepository = weaponRepository;
     }
-
     public Weapon findWeaponById(Integer id) {
         return weaponRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with ID"));
     }
-
     public Weapon findWeaponByName(String name) {
         return weaponRepository.findByName(name);
     }
-
     public List<Weapon> findWeaponByTyp(String typ) {
         return weaponRepository.findByTyp(typ);
     }
-
     public Iterable<Weapon> findAllWeapons() {
         return weaponRepository.findAll();
     }
-
     public void insertWeapon(Weapon weapon){
         weaponRepository.save(weapon);
     }
-
     public void updateWeapon(Weapon weapon){
         weaponRepository.save(weapon);
     }
-
     public void deleteById(Integer id){
         weaponRepository.deleteById(id);
 
