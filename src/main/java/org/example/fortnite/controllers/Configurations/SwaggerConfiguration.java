@@ -16,7 +16,7 @@ public class SwaggerConfiguration {
         return new OpenAPI().addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
                 .components(new Components().addSecuritySchemes("Bearer Authentication", createAPIKeyScheme()))
                 .info(new Info().title("Fortnite")
-                        .description("An example API for Basisausbildung ICT-Campus")
+                        .description("This is our Fortnite API")
                         .version("1.0"));
     }
 

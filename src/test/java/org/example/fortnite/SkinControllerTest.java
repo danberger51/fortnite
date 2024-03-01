@@ -72,7 +72,7 @@ public class SkinControllerTest {
                         // ein neues skin-Objekt wird als JSON in den Body gegeben und mitgeschickt
                         .content("{\"name\": \"Skin99\", \"rarity\": \"Episch\"}"))
                 // wir erwarten den Status 200
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test
