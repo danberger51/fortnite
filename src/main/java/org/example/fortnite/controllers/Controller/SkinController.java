@@ -118,6 +118,7 @@ public class SkinController {
 
     @PostMapping(path = "/insert",consumes = "application/json")
     @Operation(summary = "Insert a Skin")
+    @ResponseStatus(HttpStatus.CREATED)
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Created",
                     content = {@Content(mediaType = "application/json",

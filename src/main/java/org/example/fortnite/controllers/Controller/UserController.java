@@ -43,9 +43,12 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
     @GetMapping(path = "users/byId/{id}")
+    //Hier wird für Swagger die Methode beschrieben
     @Operation(summary = "find a user by id")
     @ApiResponses(value = {
+            //Hier wird dokumentiert welcher Fehler Code was Bedeutet.
             @ApiResponse(responseCode = "200", description = "User was found",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = User.class))}),
@@ -54,19 +57,27 @@ public class UserController {
             @ApiResponse(responseCode = "403", description = "You don't have the rights to do that.",
             content = @Content),
             @ApiResponse(responseCode = "400", description = "Validation failed",
+                    //defienrt, dass die Daten über Json übertragen werden.
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = User.class))})})
     public User getUserById(@Valid @PathVariable Integer id) {
         try {
+            //Ruft die Methode findUserById in userService auf
             return userService.findUserById(id);
         } catch (RuntimeException e) {
+            //gibt die Fehlermeldung "User not Found" aus
             System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.CONFLICT, "User not Found");
         }
     }
+
+
+    //Hier wird der Pfad definiert
     @GetMapping(path = "users/byUsername/{username}")
+    //Hier wird für Swagger die Methode beschrieben
     @Operation(summary = "find a user by username")
     @ApiResponses(value = {
+            //Hier wird dokumentiert welcher Fehler Code was Bedeutet.
             @ApiResponse(responseCode = "200", description = "User was found",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = User.class))}),
@@ -75,13 +86,16 @@ public class UserController {
             @ApiResponse(responseCode = "403", description = "You don't have the rights to do that.",
                     content = @Content),
             @ApiResponse(responseCode = "400", description = "Validation failed",
+                    //defienrt, dass die Daten über Json übertragen werden.
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = User.class))})})
     public User getUserByUsername(@Valid @PathVariable String username) {
         try {
+            //Ruft die Methode findUserById in userService auf
             return userService.findUserByUsername(username);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
+            //gibt die Fehlermeldung "User not Found" aus
             throw new ResponseStatusException(HttpStatus.CONFLICT, "User not Found");
         }
     }
@@ -107,8 +121,10 @@ public class UserController {
         }
     }
     @PostMapping(path = "users/sign-up", consumes = "application/json")
+    //HttpStatus welcher ausgegeben wird, wenn man ein Benutzer einfügt
+    @ResponseStatus(HttpStatus.CREATED)
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User was Sign-up successfully",
+            @ApiResponse(responseCode = "201", description = "User was Sign-up successfully",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = User.class))}),
             @ApiResponse(responseCode = "409", description = "User could not be Sign-up",
